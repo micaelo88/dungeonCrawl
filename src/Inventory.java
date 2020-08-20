@@ -38,6 +38,7 @@ public class Inventory {
         inv.remove(item);
     }
 
+    //TODO: set up metadata and comments for this class
     public Boolean checkInventory()
     {
         return inv.isEmpty();

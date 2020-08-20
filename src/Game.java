@@ -51,7 +51,7 @@ public class Game
 
         // initialise room exits
         start.setExits("south", entrance);
-        entrance.setExits("north", start); // in later iterations there will be a mechanic to prevent going north without a key
+        entrance.setExits("north", start); //TODO: in later iterations there will be a mechanic to prevent going north without a key
         entrance.setExits("east", monster);
         entrance.setExits("west", armory);
         armory.setExits("east", entrance);
@@ -123,6 +123,7 @@ public class Game
             return false;
         }
 
+        //TODO: set up the "take" and "use" commandWords
         String commandWord = command.getCommandWord();
         if (commandWord.equals("help")) {
             printHelp();
