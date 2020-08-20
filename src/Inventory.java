@@ -26,12 +26,7 @@ public class Inventory {
      */
     public Boolean getItem(String itemName)
     {
-        //TODO: change this to just be "return inv.contains(itemName);"
-        if (inv.contains(itemName)) {
-            return true;
-            }
-
-        return false;
+        return inv.contains(itemName);
     }
 
     /**
