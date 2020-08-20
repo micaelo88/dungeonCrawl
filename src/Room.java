@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 /**
@@ -19,7 +20,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;    // stores exits of this room.
-    private Item item;
+    private Inventory items;
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,6 +32,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
+        items = new Inventory();
     }
 
     /**
@@ -46,12 +48,10 @@ public class Room
     /**
      * Define an item that starts in this room.
      * @param description The item's description.
-     * @param weight The item's weight.
      */
-    public void setItem(String description, int weight)
+    public void setItem(String description)
     {
-        item = new Item(description);
-        item.setWeight(weight);
+        items.addItem(description);
     }
 
     /**
@@ -99,8 +99,8 @@ public class Room
     public String getLongDescription()
     {
         String longDescription = "You are " + description + "\n" + getExitString();
-        if(item != null) {
-            longDescription += "\n" + item.getDescriptionWeightString();
+        if(!items.checkInventory()) {
+            longDescription += "\n" + items.printInventory();
         }
         return longDescription;
     }

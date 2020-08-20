@@ -8,8 +8,10 @@
  * An "Item" represents an item and its weight. An item begins in
  * a "Room" but is independent of the room
  *
+ * 8/19/20 This class is currently not in use, but may come back into use at a later date.
+ *
  * @author Kit Mitchell
- * @version 2018.04.23
+ * @version 2020.08.19
  */
 public class Item
 {

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Inventory {
@@ -25,6 +26,7 @@ public class Inventory {
      */
     public Boolean getItem(String itemName)
     {
+        //TODO: change this to just be "return inv.contains(itemName);"
         if (inv.contains(itemName)) {
             return true;
             }
@@ -39,5 +41,21 @@ public class Inventory {
     public void removeItem(String item)
     {
         inv.remove(item);
+    }
+
+    public Boolean checkInventory()
+    {
+        return inv.isEmpty();
+    }
+
+    public String printInventory()
+    {
+        String totalInventory = "";
+
+        for(int i = 0; i < inv.size(); i++) {
+            totalInventory = totalInventory + inv.get(i) + " ";
+        }
+
+        return totalInventory;
     }
 }

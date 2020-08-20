@@ -70,9 +70,10 @@ public class Game
         key.setExits("east", trial);
 
         // initialise room items
-        armory.setItem("sword", 15);
-        reward.setItem("shiny thing", 3);
-        key.setItem("key", 1);
+        armory.setItem("sword");
+        armory.setItem("shield");
+        reward.setItem("shiny thing");
+        key.setItem("key");
 
         currentRoom = start;  // start game outside
     }
