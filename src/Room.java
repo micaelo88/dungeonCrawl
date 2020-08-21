@@ -100,7 +100,7 @@ public class Room
     {
         String longDescription = "You are " + description + "\n" + getExitString();
         if(!items.checkInventory()) {
-            longDescription += "\n" + items.printInventory();
+            longDescription += "\nVisible items: " + items.printInventory();
         }
         return longDescription;
     }
