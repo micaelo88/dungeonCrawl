@@ -74,7 +74,7 @@ public class Game
         // initialise room items
         armory.setItem("sword");
         armory.setItem("shield");
-        reward.setItem("shiny thing");
+        reward.setItem("shiny");
         key.setItem("key");
 
         currentRoom = start;  // start game outside
