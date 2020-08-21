@@ -142,6 +142,9 @@ public class Game
         else if (commandWord.equals("use")){
             System.out.println("Still under development."); //TODO: work out how to use items.
         }
+        else if (commandWord.equals("inventory")){
+            System.out.println("Inventory: " + inv.printInventory() + "\n");
+        }
         else if (commandWord.equals("eat")) {
             eat();
         }
@@ -253,7 +256,7 @@ public class Game
         else {
             inv.addItem(item);
             currentRoom.items.removeItem(item);
-            System.out.println("You have taken the " + item + ".");
+            System.out.println("You have taken the " + item + ".\n");
         }
     }
 }
