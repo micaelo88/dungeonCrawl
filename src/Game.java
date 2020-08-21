@@ -140,7 +140,7 @@ public class Game
             takeItem(command);
         }
         else if (commandWord.equals("use")){
-            System.out.println("Still under development."); //TODO: work out how to use items.
+            System.out.println("Still under development.\n"); //TODO: work out how to use items.
         }
         else if (commandWord.equals("inventory")){
             System.out.println("Inventory: " + inv.printInventory() + "\n");
@@ -170,6 +170,7 @@ public class Game
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println(parser.showCommands());
+        System.out.println("");
     }
 
     /**
@@ -180,7 +181,7 @@ public class Game
     {
         if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
+            System.out.println("Go where?\n");
             return;
         }
 
@@ -190,7 +191,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is no door!\n");
         }
         else {
             currentRoom = nextRoom;
@@ -215,7 +216,7 @@ public class Game
     private boolean quit(Command command)
     {
         if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
+            System.out.println("Quit what?\n");
             return false;
         }
         else {
@@ -228,7 +229,7 @@ public class Game
      */
     private void look()
     {
-        System.out.println(currentRoom.getLongDescription());
+        System.out.println(currentRoom.getLongDescription() + "\n");
     }
 
     /**
@@ -237,21 +238,21 @@ public class Game
      */
     private void eat()
     {
-        System.out.println("You have eaten now and you are not hungry\nany more.");
+        System.out.println("You have eaten now and you are not hungry\nany more.\n");
     }
 
     private void takeItem(Command command)
     {
         if(!command.hasSecondWord()){
             //If there's no second word, we don't know what to take
-            System.out.println("Take what?");
+            System.out.println("Take what?\n");
             return;
         }
 
         String item = command.getSecondWord();
 
         if(!currentRoom.items.getItem(item)){
-            System.out.println("You don't see that anywhere in this\nroom.");
+            System.out.println("You don't see that anywhere in this\nroom.\n");
         }
         else {
             inv.addItem(item);
