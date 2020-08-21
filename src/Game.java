@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Inventory inv;
 
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        inv = new Inventory();
     }
 
     /**
@@ -134,6 +136,12 @@ public class Game
         else if (commandWord.equals("look")) {
             look();
         }
+        else if (commandWord.equals("take")){
+            takeItem(command);
+        }
+        else if (commandWord.equals("use")){
+            System.out.println("Still under development."); //TODO: work out how to use items.
+        }
         else if (commandWord.equals("eat")) {
             eat();
         }
@@ -227,5 +235,25 @@ public class Game
     private void eat()
     {
         System.out.println("You have eaten now and you are not hungry\nany more.");
+    }
+
+    private void takeItem(Command command)
+    {
+        if(!command.hasSecondWord()){
+            //If there's no second word, we don't know what to take
+            System.out.println("Take what?");
+            return;
+        }
+
+        String item = command.getSecondWord();
+
+        if(!currentRoom.items.getItem(item)){
+            System.out.println("You don't see that anywhere in this\nroom.");
+        }
+        else {
+            inv.addItem(item);
+            currentRoom.items.removeItem(item);
+            System.out.println("You have taken the " + item + ".");
+        }
     }
 }
