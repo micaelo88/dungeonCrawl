@@ -48,7 +48,7 @@ public class Game
         monster = new Room("faced with a scary monster who wants\nto eat you.");
         chains = new Room("in a room with chains hanging from\nthe wall. Old skeletons are still locked in\nsome of the chains. You shudder to think\nabout being stuck here so long.");
         trial = new Room("faced with two strange creatures. One\nstand before a Westward door and the other stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other door\nwill leave you cursed. They also tell you that\none of them tells the truth and the other lies.\nYou ask the South door creature which door\nthe West door creature would say will help\nyou escape. It says the West door creature would\ntell you to go South. Which door do you choose?\nOr do you go North and avoid the whole thing?");
-        key = new Room("in a room with a key lying on a table."); //this will later let you get back through the enterance's North door and escape
+        key = new Room("in a room with a key lying on a table."); //this will later let you get back through the entrance's North door and escape
         curse = new Room("now cursed for always and eternity.\nType 'quit' to escape and then start a new\ngame.");
 
         // initialise room exits
@@ -70,6 +70,9 @@ public class Game
         trial.setExits("south", curse);
         trial.setExits("west", key);
         key.setExits("east", trial);
+
+        // initialise restricted exits
+        entrance.setRestrictedExits("north", "key");
 
         // initialise room items
         armory.setItem("sword");
@@ -186,6 +189,20 @@ public class Game
         }
 
         String direction = command.getSecondWord();
+
+        // Check for restricted exit
+        if(currentRoom.getRestrictedDirection(direction)){
+            String item = currentRoom.getRestrictedItem(direction);
+            if(inv.getItem(item)){
+                System.out.println("You use " + item + " to open the door.\n");
+                currentRoom.removeRestriction(direction);
+                inv.removeItem(item);
+            }
+            else {
+                System.out.println("You cannot get through this door without a " + item + ".\n");
+                return;
+            }
+        }
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);

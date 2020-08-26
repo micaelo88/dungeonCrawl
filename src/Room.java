@@ -20,6 +20,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;    // stores exits of this room.
+    private HashMap<String, String> restricted;     //stores exits that require items/puzzles
     public Inventory items;
 
     /**
@@ -32,6 +33,7 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<>();
+        restricted = new HashMap<>();
         items = new Inventory();
     }
 
@@ -46,12 +48,52 @@ public class Room
     }
 
     /**
+     * Define an exit from this room that requires an item.
+     * @param direction The direction of the exit.
+     * @param item The item needed to use the exit.
+     */
+    public void setRestrictedExits(String direction, String item)
+    {
+        restricted.put(direction, item);
+    }
+
+    /**
      * Define an item that starts in this room.
      * @param description The item's description.
      */
     public void setItem(String description)
     {
         items.addItem(description);
+    }
+
+    /**
+     * Check if the restricted HashMap is empty
+     * @param direction The exit's direction
+     * @return True if there is an item in the HashMap
+     */
+    public Boolean getRestrictedDirection(String direction)
+    {
+        return restricted.containsKey(direction);
+    }
+
+    /**
+     * Return the item needed to advance to the next room in a
+     * restricted exit
+     * @param direction The exit's direction
+     * @return The item description needed
+     */
+    public String getRestrictedItem(String direction)
+    {
+        return restricted.get(direction);
+    }
+
+    /**
+     * Removes a restriction from the restricted HashMap
+     * @param direction The exit's direction
+     */
+    public void removeRestriction(String direction)
+    {
+        restricted.remove(direction);
     }
 
     /**
