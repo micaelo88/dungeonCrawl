@@ -14,7 +14,7 @@ import java.util.Set;
  * The "Room" can also create an item.
  *
  * @author  Michael Kölling, David J. Barnes, and Christopher Mitchell
- * @version 2020.08.15
+ * @version 2020.08.25
  */
 public class Room
 {

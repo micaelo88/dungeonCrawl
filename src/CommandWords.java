@@ -7,7 +7,7 @@
  * a String list of all the commands.
  *
  * @author  Michael Kölling, David J. Barnes, and Kit Mitchell
- * @version 2018.04.23
+ * @version 2020.08.19
  */
 
 public class CommandWords
