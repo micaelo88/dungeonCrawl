@@ -22,6 +22,7 @@ public class Room
     private HashMap<String, Room> exits;    // stores exits of this room.
     private HashMap<String, String> restricted;     //stores exits that require items/puzzles
     public Inventory items;
+    public Character npc = null;
 
     /**
      * Create a room described "description". Initially, it has
@@ -29,12 +30,18 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description)
+    public Room(String description, String npcDescription)
     {
         this.description = description;
         exits = new HashMap<>();
         restricted = new HashMap<>();
         items = new Inventory();
+        if(npcDescription == null){
+            return;
+        }
+        else{
+            npc = new Character(npcDescription);
+        }
     }
 
     /**
@@ -140,7 +147,11 @@ public class Room
      */
     public String getLongDescription()
     {
-        String longDescription = "You are " + description + "\n" + getExitString();
+        String longDescription = "You are " + description + "\n";
+        if(npc !=null){
+            longDescription = longDescription + "There is a " + npc.getDescription() + " in here with you.\n";
+        }
+        longDescription = longDescription + getExitString();
         if(!items.checkInventory()) {
             longDescription += "\nVisible items: " + items.printInventory();
         }

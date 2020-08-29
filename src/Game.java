@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Inventory inv;
+    private Character player;
 
     /**
      * Create the game and initialise its internal map.
@@ -28,7 +28,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        inv = new Inventory();
+        player = new Character("You are wearing basic clothing and\nhave no armor.\n");
     }
 
     /**
@@ -39,21 +39,35 @@ public class Game
         Room start, entrance, armory, riddle, reward, pitfall, monster, chains, trial, key, curse;
 
         // create the rooms
-        start = new Room("in a dark room with one door. You don't\nknow where you are or how you got here.");
-        entrance = new Room("in the dungeon entrance. When you\nfirst entered, the way north shut and locked\nbehind you. But you see a keyhole in the\ndoor. Could there be a key somewhere?");
-        armory = new Room("in an ancient armory. You see a sword\nand a shield in fairly good condition. Everything\nelse is too rusty to use.");
-        riddle = new Room("in a room with a riddle on the wall.\nIt says:\n\n'To get your reward\n'You must choose a door.\n'You should travel a ways\n'Towards the end of your days.\n'But if you choose wrong\n'That end won't be long!'");
-        reward = new Room("in a room with a treasure chest. You\nopen it to find something nice and shiny, but\nyou have no idea what it is.");
-        pitfall = new Room("now falling into a bottomless pit.\nType 'quit' to escape and then start a new\ngame.");
-        monster = new Room("faced with a scary monster who wants\nto eat you.");
-        chains = new Room("in a room with chains hanging from\nthe wall. Old skeletons are still locked in\nsome of the chains. You shudder to think\nabout being stuck here so long.");
-        trial = new Room("faced with two strange creatures. One\nstand before a Westward door and the other stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other door\nwill leave you cursed. They also tell you that\none of them tells the truth and the other lies.\nYou ask the South door creature which door\nthe West door creature would say will help\nyou escape. It says the West door creature would\ntell you to go South. Which door do you choose?\nOr do you go North and avoid the whole thing?");
-        key = new Room("in a room with a key lying on a table."); //this will later let you get back through the entrance's North door and escape
-        curse = new Room("now cursed for always and eternity.\nType 'quit' to escape and then start a new\ngame.");
+        start = new Room("in a dark room with one door. You don't\nknow where you are or how you got here.",
+                null);
+        entrance = new Room("in the dungeon entrance. When you\nfirst entered, the way north shut and locked\n" +
+                "behind you. But you see a keyhole in the\ndoor. Could there be a key somewhere?", null);
+        armory = new Room("in an ancient armory. You see a sword\nand a shield in fairly good condition. " +
+                "Everything\nelse is too rusty to use.", null);
+        riddle = new Room("in a room with a riddle on the wall.\nIt says:\n\n'To get your reward\n'You must " +
+                "choose a door.\n'You should travel a ways\n'Towards the end of your days.\n'But if you choose wrong\n" +
+                "'That end won't be long!'", null);
+        reward = new Room("in a room with a treasure chest. You\nopen it to find something nice and shiny, but" +
+                "\nyou have no idea what it is.", null);
+        pitfall = new Room("now falling into a bottomless pit.\nType 'quit' to escape and then start a new\n" +
+                "game.", null);
+        monster = new Room("in a room filled with bones.", "scary monster");
+        chains = new Room("in a room with chains hanging from\nthe wall. Old skeletons are still locked in\n" +
+                "some of the chains. You shudder to think\nabout being stuck here so long.", null);
+        trial = new Room("faced with two strange creatures. One\nstand before a Westward door and the other " +
+                "stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other door" +
+                "\nwill leave you cursed. They also tell you that\none of them tells the truth and the other lies.\nYou " +
+                "ask the South door creature which door\nthe West door creature would say will help\nyou escape. It says " +
+                "the West door creature would\ntell you to go South. Which door do you choose?\nOr do you go North and " +
+                "avoid the whole thing?", null);
+        key = new Room("in a room with a key lying on a table.", null);
+        curse = new Room("now cursed for always and eternity.\nType 'quit' to escape and then start a new\n" +
+                "game.", null);
 
         // initialise room exits
         start.setExits("south", entrance);
-        entrance.setExits("north", start); //TODO: in later iterations there will be a mechanic to prevent going north without a key
+        entrance.setExits("north", start);
         entrance.setExits("east", monster);
         entrance.setExits("west", armory);
         armory.setExits("east", entrance);
@@ -79,6 +93,9 @@ public class Game
         armory.setItem("shield");
         reward.setItem("shiny");
         key.setItem("key");
+
+        // initialise room character's items
+        monster.npc.inv.addItem("potion");
 
         currentRoom = start;  // start game outside
     }
@@ -146,7 +163,7 @@ public class Game
             System.out.println("Still under development.\n"); //TODO: work out how to use items.
         }
         else if (commandWord.equals("inventory")){
-            System.out.println("Inventory: " + inv.printInventory() + "\n");
+            System.out.println("Inventory: " + player.inv.printInventory() + "\n");
         }
         else if (commandWord.equals("eat")) {
             eat();
@@ -193,10 +210,10 @@ public class Game
         // Check for restricted exit
         if(currentRoom.getRestrictedDirection(direction)){
             String item = currentRoom.getRestrictedItem(direction);
-            if(inv.getItem(item)){
+            if(player.inv.getItem(item)){
                 System.out.println("You use " + item + " to open the door.\n");
                 currentRoom.removeRestriction(direction);
-                inv.removeItem(item);
+                player.inv.removeItem(item);
             }
             else {
                 System.out.println("You cannot get through this door without a " + item + ".\n");
@@ -243,9 +260,11 @@ public class Game
 
     /**
      * "Look" was entered. Get a description of the room you are in.
+     * Also see any NPCs and get a description of yourself.
      */
     private void look()
     {
+        System.out.println(player.getDescription());
         System.out.println(currentRoom.getLongDescription() + "\n");
     }
 
@@ -272,7 +291,7 @@ public class Game
             System.out.println("You don't see that anywhere in this\nroom.\n");
         }
         else {
-            inv.addItem(item);
+            player.inv.addItem(item);
             currentRoom.items.removeItem(item);
             System.out.println("You have taken the " + item + ".\n");
         }
