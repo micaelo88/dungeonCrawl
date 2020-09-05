@@ -45,6 +45,16 @@ public class Room
     }
 
     /**
+     * Change the room description. This will happen when the player
+     * does something to alter the room.
+     * @param description The room's new description.
+     */
+    public void changeDescription(String description)
+    {
+        this.description = description;
+    }
+
+    /**
      * Define an exit from this room.
      * @param direction The direction of the exit.
      * @param neighbor The room to which the exit leads.
