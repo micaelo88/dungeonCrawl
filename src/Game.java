@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  *  This class is the main class of the "Dungeon" application.
  *  "Dungeon" is a very simple, text based adventure game.  Users
@@ -20,6 +22,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Character player;
+    private HashMap<String, String> newDescriptions;
 
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +30,7 @@ public class Game
     public Game()
     {
         createRooms();
+        newDescriptions = new HashMap<>();
         parser = new Parser();
         player = new Character("You are wearing basic clothing and\nhave no armor.\n");
     }
@@ -41,28 +45,28 @@ public class Game
         // create the rooms
         start = new Room("in a dark room with one door. You don't\nknow where you are or how you got here.",
                 null);
-        entrance = new Room("in the dungeon entrance. When you\nfirst entered, the way north shut and locked\n" +
-                "behind you. But you see a keyhole in the\ndoor. Could there be a key somewhere?", null);
-        armory = new Room("in an ancient armory. You see a sword\nand a shield in fairly good condition. " +
-                "Everything\nelse is too rusty to use.", null);
-        riddle = new Room("in a room with a riddle on the wall.\nIt says:\n\n'To get your reward\n'You must " +
+        entrance = new Room("in the dungeon entrance. When you first\nentered, the way north shut and locked " +
+                "behind you.\nBut you see a keyhole in the door. Could there be\na key somewhere?", null);
+        armory = new Room("in an ancient armory. You see a sword and\na shield in fairly good condition. " +
+                "Everything else\nis too rusty to use.", null);
+        riddle = new Room("in a room with a riddle on the wall. It says:\n\n'To get your reward\n'You must " +
                 "choose a door.\n'You should travel a ways\n'Towards the end of your days.\n'But if you choose wrong\n" +
                 "'That end won't be long!'", null);
-        reward = new Room("in a room with a treasure chest. You\nopen it to find something nice and shiny, but" +
-                "\nyou have no idea what it is.", null);
-        pitfall = new Room("now falling into a bottomless pit.\nType 'quit' to escape and then start a new\n" +
+        reward = new Room("in a room with a treasure chest. You open\nit to find something nice and shiny, " +
+                "but you have\nno idea what it is.", null);
+        pitfall = new Room("now falling into a bottomless pit.\n\nType 'quit' to escape and then start a new " +
                 "game.", null);
         monster = new Room("in a room filled with bones.", "scary monster");
-        chains = new Room("in a room with chains hanging from\nthe wall. Old skeletons are still locked in\n" +
-                "some of the chains. You shudder to think\nabout being stuck here so long.", null);
+        chains = new Room("in a room with chains hanging from the\nwall. Old skeletons are still locked in " +
+                "some of\nthe chains. You shudder to think about being stuck\nhere so long.", null);
         trial = new Room("faced with two strange creatures. One\nstand before a Westward door and the other " +
-                "stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other door" +
-                "\nwill leave you cursed. They also tell you that\none of them tells the truth and the other lies.\nYou " +
-                "ask the South door creature which door\nthe West door creature would say will help\nyou escape. It says " +
-                "the West door creature would\ntell you to go South. Which door do you choose?\nOr do you go North and " +
-                "avoid the whole thing?", null);
+                "stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other " +
+                "door will\nleave you cursed. They also tell you that one of\nthem tells the truth and the other " +
+                "lies. You ask\nthe South door creature which door the West door\ncreature would say will help you " +
+                "escape. It says\nthe West door creature would tell you to go South.\nWhich door do you choose? Or " +
+                "do you go North and\navoid the whole thing?", null);
         key = new Room("in a room with a key lying on a table.", null);
-        curse = new Room("now cursed for always and eternity.\nType 'quit' to escape and then start a new\n" +
+        curse = new Room("now cursed for always and eternity.\n\nType 'quit' to escape and then start a new " +
                 "game.", null);
 
         // initialise room exits
@@ -96,6 +100,26 @@ public class Game
 
         // initialise room character's items
         monster.npc.inv.addItem("potion");
+
+        // create new descriptions
+        newDescriptions.put("startUnlocked", "back where you started. It is still dark\nand there's still no way out " +
+                "except the way you\ncame in.");
+        newDescriptions.put("startShiny", "back where you started. The shiny object\nyou found begins to glow. As you " +
+                "pull it out, you\nsee a bright flash and suddenly, there is a\nglowing portal in front of you, leading" +
+                " to your\nroom.");
+        newDescriptions.put("entranceNoRestriction", "in the dungeon entrance. The way north is\nnow clear.");
+        newDescriptions.put("armoryTookSword", "in an ancient armory. You see a shield in\nfairly good condition. " +
+                "Everything else is too\nrusty to use.");
+        newDescriptions.put("armoryTookShield", "in an ancient armory. You see a sword in\nfairly good condition. " +
+                "Everything else is too\nrusty to use.");
+        newDescriptions.put("armoryTookBoth", "in an ancient armory. Everything in here\nis too rusty to use.");
+        newDescriptions.put("riddleShiny", "in the room with the riddle. You notice\nthat the door going east is now" +
+                " dark and scarred.");
+        newDescriptions.put("rewardTookShiny", "in a room with an empty treasure chest.");
+        newDescriptions.put("monsterDead", "in a room filled with bones and a dead\nmonster.");
+        newDescriptions.put("trialKey", "in an empty room. It seems the two\ncreatures have disappeared. You notice " +
+                "that the\ndoor to the south is now dark and scarred.");
+        newDescriptions.put("keyEmpty", "in a room with a table.");
 
         currentRoom = start;  // start game outside
     }
