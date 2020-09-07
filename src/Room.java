@@ -23,16 +23,20 @@ public class Room
     private HashMap<String, String> restricted;     //stores exits that require items/puzzles
     public Inventory items;
     public Character npc = null;
+    public Boolean multiDescriptions;
 
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
+     * @param npcDescription The NPC's description.
+     * @param multiDescriptions Tells whether or not this room will have multiple descriptions
      */
-    public Room(String description, String npcDescription)
+    public Room(String description, String npcDescription, Boolean multiDescriptions)
     {
         this.description = description;
+        this.multiDescriptions = multiDescriptions;
         exits = new HashMap<>();
         restricted = new HashMap<>();
         items = new Inventory();
@@ -42,6 +46,20 @@ public class Room
         else{
             npc = new Character(npcDescription);
         }
+    }
+
+    /**
+     * Returns if a room has multiple descriptions
+     * @return Boolean value for if a room has multiple descriptions
+     */
+    public Boolean getMultiDescriptions() {return multiDescriptions;}
+
+    /**
+     * Changes multiDescriptions to false
+     */
+    public void changeMultiDescriptions()
+    {
+        multiDescriptions = false;
     }
 
     /**

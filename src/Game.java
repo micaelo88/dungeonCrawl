@@ -23,6 +23,10 @@ public class Game
     private Room currentRoom;
     private Character player;
     private HashMap<String, String> newDescriptions;
+    private Room start, entrance, armory, riddle, reward, pitfall, monster, chains, trial, key, curse;
+        //These Room variables are global for use in changeDescription(). If we find a way to
+        //change the room description without having to make these global, get rid of these and
+        //uncomment the local Room variables in createRooms().
 
     /**
      * Create the game and initialise its internal map.
@@ -40,34 +44,37 @@ public class Game
      */
     private void createRooms()
     {
-        Room start, entrance, armory, riddle, reward, pitfall, monster, chains, trial, key, curse;
+        //Room start, entrance, armory, riddle, reward, pitfall, monster, chains, trial, key, curse;
+            //Note: changed these from local variables to global variables for changing room description
 
         // create the rooms
         start = new Room("in a dark room with one door. You don't\nknow where you are or how you got here.",
-                null);
+                null, true);
         entrance = new Room("in the dungeon entrance. When you first\nentered, the way north shut and locked " +
-                "behind you.\nBut you see a keyhole in the door. Could there be\na key somewhere?", null);
+                "behind you.\nBut you see a keyhole in the door. Could there be\na key somewhere?", null,
+                true);
         armory = new Room("in an ancient armory. You see a sword and\na shield in fairly good condition. " +
-                "Everything else\nis too rusty to use.", null);
+                "Everything else\nis too rusty to use.", null, true);
         riddle = new Room("in a room with a riddle on the wall. It says:\n\n'To get your reward\n'You must " +
                 "choose a door.\n'You should travel a ways\n'Towards the end of your days.\n'But if you choose wrong\n" +
-                "'That end won't be long!'", null);
+                "'That end won't be long!'", null, true);
         reward = new Room("in a room with a treasure chest. You open\nit to find something nice and shiny, " +
-                "but you have\nno idea what it is.", null);
+                "but you have\nno idea what it is.", null, true);
         pitfall = new Room("now falling into a bottomless pit.\n\nType 'quit' to escape and then start a new " +
-                "game.", null);
-        monster = new Room("in a room filled with bones.", "scary monster");
+                "game.", null, false);
+        monster = new Room("in a room filled with bones.", "scary monster", true);
         chains = new Room("in a room with chains hanging from the\nwall. Old skeletons are still locked in " +
-                "some of\nthe chains. You shudder to think about being stuck\nhere so long.", null);
+                "some of\nthe chains. You shudder to think about being stuck\nhere so long.", null,
+                false);
         trial = new Room("faced with two strange creatures. One\nstand before a Westward door and the other " +
                 "stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other " +
                 "door will\nleave you cursed. They also tell you that one of\nthem tells the truth and the other " +
                 "lies. You ask\nthe South door creature which door the West door\ncreature would say will help you " +
                 "escape. It says\nthe West door creature would tell you to go South.\nWhich door do you choose? Or " +
-                "do you go North and\navoid the whole thing?", null);
-        key = new Room("in a room with a key lying on a table.", null);
+                "do you go North and\navoid the whole thing?", null, true);
+        key = new Room("in a room with a key lying on a table.", null, true);
         curse = new Room("now cursed for always and eternity.\n\nType 'quit' to escape and then start a new " +
-                "game.", null);
+                "game.", null, false);
 
         // initialise room exits
         start.setExits("south", entrance);
@@ -253,7 +260,27 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
+            if (currentRoom.getMultiDescriptions()){
+                changeDescription();
+            }
             printLocationInfo();
+        }
+    }
+
+    /**
+     * Change the description of the room using the HashMap set
+     * up earlier
+     */
+    private void changeDescription()
+    {
+        if (currentRoom == start){
+            if (player.inv.getItem("shiny")){
+                currentRoom.changeDescription(newDescriptions.get("startShiny"));
+                currentRoom.changeMultiDescriptions();
+            }
+            else {
+                currentRoom.changeDescription(newDescriptions.get("startUnlocked"));
+            }
         }
     }
 
