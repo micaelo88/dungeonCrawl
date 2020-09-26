@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public class Room extends Thing
 {
-    private HashMap<String, Room> exits;    // stores exits of this room.
+    private int n, s, w, e;
     private HashMap<String, String> restricted;     //stores exits that require items/puzzles
     public Inventory items;
     public Character npc = null;
@@ -29,10 +29,13 @@ public class Room extends Thing
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String name, String description, String npcDescription)
+    public Room(String name, String description, String npcDescription, int aN, int aS, int aW, int aE)
     {
-        super(name, description)
-        exits = new HashMap<>();
+        super(name, description);
+        this.n = aN;
+        this.s = aS;
+        this.w = aW;
+        this.e = aE;
         restricted = new HashMap<>();
         items = new Inventory();
         if(npcDescription == null){
@@ -43,16 +46,43 @@ public class Room extends Thing
         }
     }
 
-    /**
-     * Define an exit from this room.
-     * @param direction The direction of the exit.
-     * @param neighbor The room to which the exit leads.
-     */
-    public void setExits(String direction, Room neighbor)
-    {
-        exits.put(direction, neighbor);
+    // --- accessor methods ---
+    // n
+    public int getN() {
+        return n;
     }
 
+    public void setN(int aN) {
+        this.n = aN;
+    }
+
+    // s
+    public int getS() {
+        return s;
+    }
+
+    public void setS(int aS) {
+        this.s = aS;
+    }
+
+    // e
+    public int getE() {
+        return e;
+    }
+
+    public void setE(int aE) {
+        this.e = aE;
+    }
+
+    // w
+    public int getW() {
+        return w;
+    }
+
+    void setW(int aW) {
+        this.w = aW;
+    }
+    
     /**
      * Define an exit from this room that requires an item.
      * @param direction The direction of the exit.

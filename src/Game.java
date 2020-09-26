@@ -42,50 +42,40 @@ public class Game
         this.map = new ArrayList<Room>();
 
         // create the rooms
-        map.add(new Room("start", "in a dark room with one door. You don't\nknow where you are or how you got here.", null));
-        map.add(new Room("entrance", "in the dungeon entrance. When you first\nentered, the way north shut and locked " +
-                "behind you.\nBut you see a keyhole in the door. Could there be\na key somewhere?", null));
-        map.add(new Room("armory", "in an ancient armory. You see a sword and\na shield in fairly good condition. " +
-                "Everything else\nis too rusty to use.", null));
-        map.add(new Room("riddle", "in a room with a riddle on the wall. It says:\n\n'To get your reward\n'You must " +
-                "choose a door.\n'You should travel a ways\n'Towards the end of your days.\n'But if you choose wrong\n" +
-                "'That end won't be long!'", null));
-        map.add(new Room("reward", "in a room with a treasure chest. You open\nit to find something nice and shiny, " +
-                "but you have\nno idea what it is.", null));
-        map.add(new Room("pitfall", "now falling into a bottomless pit.\n\nType 'quit' to escape and then start a new " +
-                "game.", null));
-        map.add(new Room("monster", "in a room filled with bones.", "scary monster"));
-        map.add(new Room("chains", "in a room with chains hanging from the\nwall. Old skeletons are still locked in " +
-                "some of\nthe chains. You shudder to think about being stuck\nhere so long.", null));
-        map.add(new Room("trial", "faced with two strange creatures. One\nstand before a Westward door and the other " +
-                "stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and the other " +
-                "door will\nleave you cursed. They also tell you that one of\nthem tells the truth and the other " +
-                "lies. You ask\nthe South door creature which door the West door\ncreature would say will help you " +
-                "escape. It says\nthe West door creature would tell you to go South.\nWhich door do you choose? Or " +
-                "do you go North and\navoid the whole thing?", null));
-        map.add(new Room("key", "in a room with a key lying on a table.", null));
-        map.add(new Room("curse", "now cursed for always and eternity.\n\nType 'quit' to escape and then start a new " +
-                "game.", null));
-
-        // initialise room exits
-        start.setExits("south", entrance);
-        entrance.setExits("north", start);
-        entrance.setExits("east", monster);
-        entrance.setExits("west", armory);
-        armory.setExits("east", entrance);
-        armory.setExits("south", riddle);
-        riddle.setExits("north", armory);
-        riddle.setExits("east", pitfall);
-        riddle.setExits("west", reward);
-        reward.setExits("east", riddle);
-        monster.setExits("east", chains);
-        monster.setExits("west", entrance);
-        chains.setExits("south", trial);
-        chains.setExits("west", monster);
-        trial.setExits("north", chains);
-        trial.setExits("south", curse);
-        trial.setExits("west", key);
-        key.setExits("east", trial);
+        // Room(name, description, npcDescription, N, S, W, E)
+        map.add(new Room("start", "in a dark room with one door. You don't\nknow where you are or how you" +
+                " got here.", null, Directions.NOEXIT, 1, Directions.NOEXIT, Directions.NOEXIT));
+        map.add(new Room("entrance", "in the dungeon entrance. When you first\nentered, the way north " +
+                "shut and locked behind you.\nBut you see a keyhole in the door. Could there be\na key somewhere?",
+                null, 0, Directions.NOEXIT, 2, 6));
+        map.add(new Room("armory", "in an ancient armory. You see a sword and\na shield in fairly good " +
+                "condition. Everything else\nis too rusty to use.", null, Directions.NOEXIT, 3,
+                Directions.NOEXIT, 1));
+        map.add(new Room("riddle", "in a room with a riddle on the wall. It says:\n\n'To get your " +
+                "reward\n'You must choose a door.\n'You should travel a ways\n'Towards the end of your days.\n'But if" +
+                " you choose wrong\n'That end won't be long!'", null, 2, Directions.NOEXIT, 4, 5));
+        map.add(new Room("reward", "in a room with a treasure chest. You open\nit to find something " +
+                "nice and shiny, but you have\nno idea what it is.", null, Directions.NOEXIT, Directions.NOEXIT,
+                Directions.NOEXIT, 3));
+        map.add(new Room("pitfall", "now falling into a bottomless pit.\n\nType 'quit' to escape and " +
+                "then start a new game.", null, Directions.NOEXIT, Directions.NOEXIT, Directions.NOEXIT,
+                Directions.NOEXIT));
+        map.add(new Room("monster", "in a room filled with bones.", "scary monster",
+                Directions.NOEXIT, Directions.NOEXIT, 1, 7));
+        map.add(new Room("chains", "in a room with chains hanging from the\nwall. Old skeletons are " +
+                "still locked in some of\nthe chains. You shudder to think about being stuck\nhere so long.",
+                null, Directions.NOEXIT, 8, 6, Directions.NOEXIT));
+        map.add(new Room("trial", "faced with two strange creatures. One\nstand before a Westward door " +
+                "and the other stands\nbefore a Southward door. They tell you that one\ndoor will help you escape and" +
+                " the other door will\nleave you cursed. They also tell you that one of\nthem tells the truth and the " +
+                "other lies. You ask\nthe South door creature which door the West door\ncreature would say will help " +
+                "you escape. It says\nthe West door creature would tell you to go South.\nWhich door do you choose? " +
+                "Or do you go North and\navoid the whole thing?", null, 7, 10, 9, Directions.NOEXIT));
+        map.add(new Room("key", "in a room with a key lying on a table.", null, Directions.NOEXIT,
+                Directions.NOEXIT, Directions.NOEXIT, 8));
+        map.add(new Room("curse", "now cursed for always and eternity.\n\nType 'quit' to escape and " +
+                "then start a new game.", null, Directions.NOEXIT, Directions.NOEXIT, Directions.NOEXIT,
+                Directions.NOEXIT));
 
         // initialise restricted exits
         entrance.setRestrictedExits("north", "key");
