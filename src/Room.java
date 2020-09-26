@@ -16,9 +16,8 @@ import java.util.Set;
  * @author  Michael Kölling, David J. Barnes, and Christopher Mitchell
  * @version 2020.08.25
  */
-public class Room
+public class Room extends Thing
 {
-    private String description;
     private HashMap<String, Room> exits;    // stores exits of this room.
     private HashMap<String, String> restricted;     //stores exits that require items/puzzles
     public Inventory items;
@@ -32,7 +31,7 @@ public class Room
      */
     public Room(String description, String npcDescription)
     {
-        this.description = description;
+        super(name, description)
         exits = new HashMap<>();
         restricted = new HashMap<>();
         items = new Inventory();
@@ -130,16 +129,7 @@ public class Room
         return returnString;
     }
 
-    /**
-     * @return The description of the room
-     * (the one that was defined in the constructor).
-     */
-    public String getDescription()
-    {
-        return description;
-    }
-
-    /**
+     /**
      * Return a long description of this room, of the form:
      *      You are in the kitchen.
      *      Exits: north west
@@ -147,7 +137,7 @@ public class Room
      */
     public String getLongDescription()
     {
-        String longDescription = "You are " + description + "\n";
+        String longDescription = "You are " + super.getDescription() + "\n";
         if(npc !=null){
             longDescription = longDescription + "There is a " + npc.getDescription() + " in here with you.\n";
         }
