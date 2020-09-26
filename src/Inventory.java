@@ -16,67 +16,82 @@ import java.util.List;
  * @version 2020.08.26
  */
 
-public class Inventory {
+public class Inventory extends Thing {
 
-    List<String> inv;
+    private ThingList things = new ThingList();
 
     /**
      * Create an inventory
      */
-    public Inventory()
+    public Inventory(String aName, String aDescription, ThingList tl)
     {
-        inv = new ArrayList<>();
+        super(aName, aDescription);
+        things = tl;
     }
 
     /**
-     * Add an item to the inventory
-     * @param item name of the item to be added
+     * @return the things
      */
-    public void addItem(String item)
-    {
-        inv.add(item);
+    public ThingList getThings() {
+        return things;
     }
 
     /**
-     * Search for a particular item by name
-     * @param itemName name of the item we're searching for
-     * @return Boolean value
+     * @param things the things to set
      */
-    public Boolean getItem(String itemName)
-    {
-        return inv.contains(itemName);
+    public void setThings(ThingList things) {
+        this.things = things;
     }
 
-    /**
-     * Remove an item from the inventory
-     * @param item name of the item that we're removing
-     */
-    public void removeItem(String item)
-    {
-        inv.remove(item);
-    }
-
-    /**
-     * Check if the inventory is empty
-     * @return Returns True if the inventory is empty
-     */
-    public Boolean checkInventory()
-    {
-        return inv.isEmpty();
-    }
-
-    /**
-     * Get a string list of all items in the inventory
-     * @return String variable of all the items in the inventory
-     */
-    public String printInventory()
-    {
-        String totalInventory = "";
-
-        for(int i = 0; i < inv.size(); i++) {
-            totalInventory = totalInventory + inv.get(i) + " ";
-        }
-
-        return totalInventory;
-    }
+//    /**
+//     * Add an item to the inventory
+//     * @param item name of the item to be added
+//     */
+//    public void addItem(String item)
+//    {
+//        inv.add(item);
+//    }
+//
+//    /**
+//     * Search for a particular item by name
+//     * @param itemName name of the item we're searching for
+//     * @return Boolean value
+//     */
+//    public Boolean getItem(String itemName)
+//    {
+//        return inv.contains(itemName);
+//    }
+//
+//    /**
+//     * Remove an item from the inventory
+//     * @param item name of the item that we're removing
+//     */
+//    public void removeItem(String item)
+//    {
+//        inv.remove(item);
+//    }
+//
+//    /**
+//     * Check if the inventory is empty
+//     * @return Returns True if the inventory is empty
+//     */
+//    public Boolean checkInventory()
+//    {
+//        return inv.isEmpty();
+//    }
+//
+//    /**
+//     * Get a string list of all items in the inventory
+//     * @return String variable of all the items in the inventory
+//     */
+//    public String printInventory()
+//    {
+//        String totalInventory = "";
+//
+//        for(int i = 0; i < inv.size(); i++) {
+//            totalInventory = totalInventory + inv.get(i) + " ";
+//        }
+//
+//        return totalInventory;
+//    }
 }
