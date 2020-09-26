@@ -78,16 +78,18 @@ public class Game
                 Directions.NOEXIT));
 
         // initialise restricted exits
-        entrance.setRestrictedExits("north", "key");
+        // entrance.setRestrictedExits("north", "key");
+        // TODO: figure out how to make this mechanic work with the new system. Need to set up inventory first.
 
-        // initialise room items
-        armory.setItem("sword");
-        armory.setItem("shield");
-        reward.setItem("shiny");
-        key.setItem("key");
-
-        // initialise room character's items
-        monster.npc.inv.addItem("potion");
+//        // initialise room items
+//        armory.setItem("sword");
+//        armory.setItem("shield");
+//        reward.setItem("shiny");
+//        key.setItem("key");
+//
+//        // initialise room character's items
+//        monster.npc.inv.addItem("potion");
+        // TODO: initialize items when I've set up the inventory
 
         currentRoom = start;  // start game outside
     }

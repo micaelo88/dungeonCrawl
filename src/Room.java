@@ -82,7 +82,7 @@ public class Room extends Thing
     void setW(int aW) {
         this.w = aW;
     }
-    
+
     /**
      * Define an exit from this room that requires an item.
      * @param direction The direction of the exit.
@@ -132,32 +132,32 @@ public class Room extends Thing
         restricted.remove(direction);
     }
 
-    /**
-     * Return the room that is reached if we go from this room in
-     * direction "direction." If there is no room in that direction,
-     * return null.
-     * @param direction The exit's direction
-     * @return The room in the given direction
-     */
-    public Room getExit(String direction)
-    {
-        return exits.get(direction);
-    }
+//    /**
+//     * Return the room that is reached if we go from this room in
+//     * direction "direction." If there is no room in that direction,
+//     * return null.
+//     * @param direction The exit's direction
+//     * @return The room in the given direction
+//     */
+//    public Room getExit(String direction)
+//    {
+//        return exits.get(direction);
+//    }
 
-    /**
-     * Return a description of the room's exits,
-     * for example, "Exits: north west".
-     * @return A description of the available exits.
-     */
-    public String getExitString()
-    {
-        String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
-        for(String exit : keys) {
-            returnString += " " + exit;
-        }
-        return returnString;
-    }
+//    /**
+//     * Return a description of the room's exits,
+//     * for example, "Exits: north west".
+//     * @return A description of the available exits.
+//     */
+//    public String getExitString()
+//    {
+//        String returnString = "Exits:";
+//        Set<String> keys = exits.keySet();
+//        for(String exit : keys) {
+//            returnString += " " + exit;
+//        }
+//        return returnString;
+//    }
 
      /**
      * Return a long description of this room, of the form:
@@ -171,7 +171,7 @@ public class Room extends Thing
         if(npc !=null){
             longDescription = longDescription + "There is a " + npc.getDescription() + " in here with you.\n";
         }
-        longDescription = longDescription + getExitString();
+//        longDescription = longDescription + getExitString();
         if(!items.checkInventory()) {
             longDescription += "\nVisible items: " + items.printInventory();
         }
