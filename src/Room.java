@@ -29,7 +29,7 @@ public class Room extends Thing
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, String npcDescription)
+    public Room(String name, String description, String npcDescription)
     {
         super(name, description)
         exits = new HashMap<>();
